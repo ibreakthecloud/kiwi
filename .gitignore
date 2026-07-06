@@ -1,5 +1,6 @@
 # Binaries
 kiwi
+kiwid
 
 # Task state logs
 task_state.json
