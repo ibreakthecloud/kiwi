@@ -11,11 +11,13 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/ibreakthecloud/kiwi/pkg/provider"
 	"github.com/ibreakthecloud/kiwi/pkg/sandbox"
+	"github.com/ibreakthecloud/kiwi/pkg/tunnel"
 )
 
 // TaskState represents the status and progress of a cloud task
@@ -52,6 +54,13 @@ func (s *Server) Start(addr string) error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/tasks", s.handleTasks)
 	mux.HandleFunc("/tasks/", s.handleTaskStatus)
+	mux.HandleFunc("/tunnel/", func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, "/response") {
+			tunnel.HandleTunnelResponse(w, r)
+		} else {
+			tunnel.HandleTunnelConn(w, r)
+		}
+	})
 
 	fmt.Printf("[Server] Kiwi daemon listening on %s\n", addr)
 	return http.ListenAndServe(addr, mux)
@@ -128,6 +137,11 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 		p := provider.NewMockProvider()
 		engine := NewEngine(p, 5)
 		engine.LogOut = logBuf // Capture logs to task buffer
+		engine.StateCallback = func(newStatus string) {
+			s.tasksMutex.Lock()
+			state.Status = newStatus
+			s.tasksMutex.Unlock()
+		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		defer cancel()
@@ -137,7 +151,7 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 		// Periodic status logger into buffer
 		fmt.Fprintf(logBuf, "[Orchestrator] Spawned cloud sandbox at: %s\n", tempSandbox)
 
-		err := engine.RunTask(ctx, tempSandbox, task, absFilePath, testCmd)
+		err := engine.RunTask(ctx, taskID, tempSandbox, task, absFilePath, testCmd)
 
 		s.tasksMutex.Lock()
 		defer s.tasksMutex.Unlock()

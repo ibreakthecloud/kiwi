@@ -5,16 +5,19 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 
 	"github.com/ibreakthecloud/kiwi/pkg/provider"
 	"github.com/ibreakthecloud/kiwi/pkg/sandbox"
+	"github.com/ibreakthecloud/kiwi/pkg/tunnel"
 )
 
 // Engine orchestrates the feedback loop (TDD actor-critic control loop)
 type Engine struct {
-	Provider provider.Provider
-	MaxSteps int
-	LogOut   io.Writer
+	Provider      provider.Provider
+	MaxSteps      int
+	LogOut        io.Writer
+	StateCallback func(string)
 }
 
 // NewEngine creates a new Loop Orchestrator engine
@@ -33,12 +36,67 @@ func (e *Engine) log(format string, a ...interface{}) {
 	}
 }
 
+// resolveEnv requests credentials over the reverse tunnel.
+// If the tunnel is disconnected, it pauses statefully and blocks until reconnect.
+func (e *Engine) resolveEnv(ctx context.Context, taskID string, reqKeys []string) ([]string, error) {
+	t := tunnel.GlobalRegistry.Get(taskID)
+	if t == nil {
+		return nil, nil // No tunnel registered for this task
+	}
+
+	var envs []string
+	for _, key := range reqKeys {
+		for {
+			t.Mutex.Lock()
+			connected := t.Connected
+			t.Mutex.Unlock()
+
+			if connected {
+				break
+			}
+
+			// Tunnel is down. Pause task state.
+			e.log("[Orchestrator] Reverse tunnel disconnected. Pausing execution... (waiting for client to reconnect)\n")
+			if e.StateCallback != nil {
+				e.StateCallback("PAUSED")
+			}
+
+			select {
+			case <-ctx.Done():
+				return nil, ctx.Err()
+			case <-time.After(1 * time.Second):
+			}
+		}
+
+		// Reconnected, restore state
+		if e.StateCallback != nil {
+			e.StateCallback("RUNNING")
+		}
+
+		e.log("[Orchestrator] Fetching credential '%s' over reverse tunnel...\n", key)
+		val, err := t.GetSecret(ctx, key)
+		if err != nil {
+			e.log("[Orchestrator Warning] Tunnel request failed: %v. Retrying...\n", err)
+			time.Sleep(1 * time.Second)
+			continue
+		}
+		envs = append(envs, fmt.Sprintf("%s=%s", key, val))
+	}
+	return envs, nil
+}
+
 // RunTask starts the feedback loop to align the codebase to the desired state.
-func (e *Engine) RunTask(ctx context.Context, dir string, task string, filePath string, testCmd string) error {
+func (e *Engine) RunTask(ctx context.Context, taskID string, dir string, task string, filePath string, testCmd string) error {
 	e.log("[Orchestrator] Desired State: %s\n", task)
 	e.log("[Orchestrator] Running initial test command: %s\n", testCmd)
 
-	res, err := sandbox.RunCommand(ctx, dir, testCmd)
+	// Resolve target credentials over the tunnel if required
+	env, err := e.resolveEnv(ctx, taskID, []string{"GITHUB_TOKEN"})
+	if err != nil {
+		return fmt.Errorf("failed to resolve tunnel environment: %w", err)
+	}
+
+	res, err := sandbox.RunCommand(ctx, dir, testCmd, env)
 	if err != nil {
 		return fmt.Errorf("sandbox failed to run command: %w", err)
 	}
@@ -75,7 +133,11 @@ func (e *Engine) RunTask(ctx context.Context, dir string, task string, filePath 
 
 		// Run compiler/tests in the sandbox
 		e.log("[Sandbox] Re-running build/tests...\n")
-		res, err = sandbox.RunCommand(ctx, dir, testCmd)
+		env, err = e.resolveEnv(ctx, taskID, []string{"GITHUB_TOKEN"})
+		if err != nil {
+			return fmt.Errorf("failed to resolve tunnel environment: %w", err)
+		}
+		res, err = sandbox.RunCommand(ctx, dir, testCmd, env)
 		if err != nil {
 			return fmt.Errorf("sandbox run failed: %w", err)
 		}

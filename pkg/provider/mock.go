@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"strings"
+	"time"
 )
 
 // Provider defines the interface for communicating with LLMs
@@ -25,7 +26,7 @@ func (m *MockProvider) GetCodeEdit(ctx context.Context, task string, fileName st
 	select {
 	case <-ctx.Done():
 		return "", ctx.Err()
-	default:
+	case <-time.After(3 * time.Second):
 	}
 
 	// Rule 1: Detect math_utils.go bug

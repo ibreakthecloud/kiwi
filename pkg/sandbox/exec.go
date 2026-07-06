@@ -3,6 +3,7 @@ package sandbox
 import (
 	"bytes"
 	"context"
+	"os"
 	"os/exec"
 )
 
@@ -14,11 +15,14 @@ type Result struct {
 }
 
 // RunCommand runs a test or compiler command in a shell inside the target directory.
-// It also fetches the current git diff of the workspace to capture modifications.
-func RunCommand(ctx context.Context, dir string, cmdStr string) (*Result, error) {
+// It accepts environment variables to inject, and fetches the current git diff.
+func RunCommand(ctx context.Context, dir string, cmdStr string, env []string) (*Result, error) {
 	// Execute the command in sh/bash to allow wildcards, pipes, etc.
 	cmd := exec.CommandContext(ctx, "sh", "-c", cmdStr)
 	cmd.Dir = dir
+	if len(env) > 0 {
+		cmd.Env = append(os.Environ(), env...)
+	}
 
 	var outBuf bytes.Buffer
 	cmd.Stdout = &outBuf
