@@ -75,7 +75,7 @@ sequenceDiagram
 
 2.  **Start the Kiwi Server Daemon**:
     ```bash
-    ./kiwid -addr :8080
+    ./kiwid -addr :8080 -db kiwi.db
     ```
 
 3.  **Deploy a Task**:

@@ -12,18 +12,18 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/ibreakthecloud/kiwi/pkg/dashboard"
 	"github.com/ibreakthecloud/kiwi/pkg/provider"
 	"github.com/ibreakthecloud/kiwi/pkg/sandbox"
 	"github.com/ibreakthecloud/kiwi/pkg/tunnel"
+	"gorm.io/gorm"
 )
 
 // TaskState represents the status and progress of a cloud task
 type TaskState struct {
-	ID          string    `json:"id"`
+	ID          string    `json:"id" gorm:"primaryKey"`
 	Task        string    `json:"task"`
 	FilePath    string    `json:"file_path"`
 	TestCmd     string    `json:"test_cmd"`
@@ -35,13 +35,12 @@ type TaskState struct {
 }
 
 type Server struct {
-	tasks      map[string]*TaskState
-	tasksMutex sync.RWMutex
+	db *gorm.DB
 }
 
-func NewServer() *Server {
+func NewServer(db *gorm.DB) *Server {
 	return &Server{
-		tasks: make(map[string]*TaskState),
+		db: db,
 	}
 }
 
@@ -77,12 +76,11 @@ func (s *Server) Start(addr string) error {
 
 func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		s.tasksMutex.RLock()
-		taskList := make([]*TaskState, 0, len(s.tasks))
-		for _, task := range s.tasks {
-			taskList = append(taskList, task)
+		var taskList []*TaskState
+		if err := s.db.Order("created_at desc").Find(&taskList).Error; err != nil {
+			http.Error(w, "Failed to load tasks from database", http.StatusInternalServerError)
+			return
 		}
-		s.tasksMutex.RUnlock()
 
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(taskList)
@@ -150,9 +148,10 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 		Cost:        0.05,
 	}
 
-	s.tasksMutex.Lock()
-	s.tasks[taskID] = state
-	s.tasksMutex.Unlock()
+	if err := s.db.Create(state).Error; err != nil {
+		http.Error(w, "failed to register task in database", http.StatusInternalServerError)
+		return
+	}
 
 	// Launch loop orchestration in the background
 	go func() {
@@ -161,18 +160,29 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 		engine := NewEngine(p, 5)
 		engine.LogOut = logBuf // Capture logs to task buffer
 		engine.StateCallback = func(newStatus string) {
-			s.tasksMutex.Lock()
-			state.Status = newStatus
-			s.tasksMutex.Unlock()
+			s.db.Model(&TaskState{}).Where("id = ?", taskID).Update("status", newStatus)
 		}
 		engine.CostCallback = func(amount float64) {
-			s.tasksMutex.Lock()
-			state.Cost += amount
-			s.tasksMutex.Unlock()
+			s.db.Model(&TaskState{}).Where("id = ?", taskID).Update("cost", gorm.Expr("cost + ?", amount))
 		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		defer cancel()
+
+		// Periodic background log synchronizer to SQLite row (every 500ms)
+		go func() {
+			ticker := time.NewTicker(500 * time.Millisecond)
+			defer ticker.Stop()
+			for {
+				select {
+				case <-ctx.Done():
+					s.db.Model(&TaskState{}).Where("id = ?", taskID).Update("logs", logBuf.String())
+					return
+				case <-ticker.C:
+					s.db.Model(&TaskState{}).Where("id = ?", taskID).Update("logs", logBuf.String())
+				}
+			}
+		}()
 
 		absFilePath := filepath.Join(tempSandbox, file)
 
@@ -181,26 +191,24 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 
 		err := engine.RunTask(ctx, taskID, tempSandbox, task, absFilePath, testCmd)
 
-		s.tasksMutex.Lock()
-		defer s.tasksMutex.Unlock()
-
+		finalStatus := "SUCCESS"
 		if err != nil {
-			state.Status = "FAILED"
+			finalStatus = "FAILED"
 			fmt.Fprintf(logBuf, "\n[Execution Failure]: %v\n", err)
 		} else {
-			state.Status = "SUCCESS"
 			fmt.Fprintln(logBuf, "\n[Execution Success]: Task completed successfully.")
 
-			// In a real cloud flow, we would compress the fixed workspace back
-			// so the local client can pull/extract it.
-			// Let's store the final archive in the temporary directory.
-			// The client can fetch it via another endpoint, or we zip it here.
+			// Zip the fixed sandbox
 			fixedZip, err := sandbox.ZipDir(tempSandbox)
 			if err == nil {
 				_ = os.WriteFile(filepath.Join(tempSandbox, "output.zip"), fixedZip, 0644)
 			}
 		}
-		state.Logs = logBuf.String()
+
+		s.db.Model(&TaskState{}).Where("id = ?", taskID).Updates(map[string]interface{}{
+			"status": finalStatus,
+			"logs":   logBuf.String(),
+		})
 	}()
 
 	w.Header().Set("Content-Type", "application/json")
@@ -218,11 +226,8 @@ func (s *Server) handleTaskStatus(w http.ResponseWriter, r *http.Request) {
 
 	taskID := filepath.Base(r.URL.Path)
 
-	s.tasksMutex.RLock()
-	state, exists := s.tasks[taskID]
-	s.tasksMutex.RUnlock()
-
-	if !exists {
+	var state TaskState
+	if err := s.db.First(&state, "id = ?", taskID).Error; err != nil {
 		http.Error(w, "Task not found", http.StatusNotFound)
 		return
 	}

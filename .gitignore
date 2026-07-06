@@ -9,3 +9,9 @@ secrets.json
 # Go workspaces/debug files
 *.out
 *.test
+query
+
+# Database
+*.db
+*.db-wal
+*.db-shm

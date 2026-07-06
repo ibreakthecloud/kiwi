@@ -54,7 +54,9 @@ func ZipDir(srcDir string) ([]byte, error) {
 			strings.HasSuffix(name, ".test") ||
 			name == ".DS_Store" ||
 			name == "task_state.json" ||
-			name == "secrets.json" {
+			name == "secrets.json" ||
+			strings.HasPrefix(name, "kiwi.db") ||
+			name == "server.log" {
 			return nil
 		}
 

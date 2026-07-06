@@ -21,8 +21,8 @@ codesign -s - -f ./kiwid
 
 ### Running the Services
 ```bash
-# Start the central cloud daemon listening on port 8080
-./kiwid -addr :8080
+# Start the central cloud daemon listening on port 8080 (using SQLite database)
+./kiwid -addr :8080 -db kiwi.db
 
 # Execute a TDD auto-fixing task in Cloud Mode (default)
 ./kiwi -task "Fix division by zero in Divide()" -file demo_project/math_utils.go -test-cmd "go test ./demo_project/..." -server "http://localhost:8080"
