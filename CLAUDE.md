@@ -91,9 +91,34 @@ kiwi/
 ### Active Limitations
 1.  **Mock AI Provider**: The LLM interface (`pkg/provider/mock.go`) uses rule-based simulations. Real integrations with Anthropic/OpenAI APIs are not yet wired up.
 2.  **Local Secrets Store**: The CLI client reads local secrets from an unencrypted `secrets.json` file in the workspace or defaults to standard environment variables.
-3.  **Docker image requirement**: The server's Docker sandbox mode requires the host to have Docker installed and the `golang:1.21-alpine` image pulled/resolvable.
+3.  **Local Host Mounted Sandboxes**: The Docker sandbox mode mounts directories from the host server (`/var/folders/...`) directly into the container. In multi-tenant systems, this leaks file descriptors and permissions, requiring independent Virtual Machine sandboxing.
+4.  **In-Memory Tunnel Cache**: The credentials cache on the server is kept inside the local daemon's memory. If the daemon restarts, cached credentials for running tasks are lost, prompting a stateful pause until the developer reconnects.
 
 ### Remaining Work / TODOs
-*   `[ ]` **Wire Live Providers**: Add OpenAI and Anthropic SDK API calls to `pkg/provider/llm.go`, resolving api base and proxy tokens correctly.
-*   `[ ]` **OIDC & Identity Federation**: Implement enterprise-grade federated identity (e.g. Auth0, Okta) on the central Cloud Daemon for multi-tenant organizations.
-*   `[ ]` **Dashboard Triggering**: Allow launching new tasks and creating files directly from the Kanban Board UI instead of starting from the CLI.
+
+#### 1. Integration of Live LLM Providers (`pkg/provider/llm.go`)
+*   `[ ]` Add OpenAI and Anthropic Go SDK clients.
+*   `[ ]` Create prompt templates for the **Actor** (focused on resolving compiler errors and writing functional code edits) and the **Critic** (reviews diffs for performance, safety, and correctness).
+*   `[ ]` Support dynamic model swapping (e.g., GPT-4o for Actor, Claude 3.5 Sonnet for Critic).
+
+#### 2. PKCE-based OAuth 2.0 Auth Flow
+*   `[ ]` Implement a `kiwi login` command in the CLI. Spawns a temporary local HTTP server, opens the browser to authenticate via Auth0/Okta, and obtains JWT tokens.
+*   `[ ]` Secure JWT storage on the developer's client machine using platform-specific keychains (e.g., `keyring` in Linux, Keychain in macOS).
+*   `[ ]` Integrate JWT signature verification middleware on the server to replace the static token checks.
+
+#### 3. Interactive Web Dashboard Controls (`pkg/dashboard/`)
+*   `[ ]` Expose task cancellation (`POST /tasks/{id}/cancel`) and manual pausing (`POST /tasks/{id}/pause`) HTTP endpoints.
+*   `[ ]` Update the Kanban UI with buttons to:
+    *   Pause/Resume execution loops.
+    *   Trigger new task submissions via a modal.
+    *   Interact with human-in-the-loop checks (e.g., prompt for permission to apply a critical code fix).
+
+#### 4. Sandbox Virtualization & Isolation Manager
+*   `[ ]` Move from simple Docker mounts to a dedicated MicroVM orchestration layer (e.g. **Firecracker** or **gVisor**).
+*   `[ ]` Implement a Sandbox Manager service that dynamically provisions clean kernel-isolated sandboxes in <100ms.
+*   `[ ]` Support custom execution base images mapped per programming language (Go, Python, Node.js).
+
+#### 5. High-Performance Log Streaming
+*   `[ ]` Move live streaming logs from SQLite/GORM updates to **Redis Streams** or WebSocket events.
+*   `[ ]` Save archived logs to an object store (e.g. AWS S3, Google Cloud Storage) upon task completion to keep the relational database clean and scalable.
+
