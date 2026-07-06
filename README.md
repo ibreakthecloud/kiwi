@@ -52,6 +52,30 @@ sequenceDiagram
 
 ---
 
+### Phase 4: Central Dashboard, Budgets, & Loop Safety
+*   **Goal**: Build the operational control plane for team administrators.
+*   **Key Tasks**:
+		1.  Implement the Kanban Board API (`pkg/dashboard`) serving state (Backlog, In Progress, Paused, Done).
+		2.  Build semantic loop detection: Hash outgoing LLM trajectories and trigger a circuit breaker if the agent makes identical failing edits.
+		3.  Implement unified billing and team cost quotas (e.g. stopping loops once the user's allocated daily dollar pool is hit).
+*   **Verification**: An admin can log into the dashboard, view active/paused loops, inspect cost logs, and set spending limits.
+
+---
+
+### Phase 5: Authentication & Docker Sandboxing (Production Hardening)
+*   **Goal**: Restrict API access via Token Authorization and isolate execution sandboxes inside Docker containers.
+*   **Key Tasks**:
+    1.  **Authorization Middleware**: Implement JWT/bearer token authentication middleware in `pkg/orchestrator/server.go`. Require `Authorization: Bearer <token>` for all endpoints (except serving the dashboard html).
+    2.  **CLI Credentials Integration**: Update `cmd/kiwi/main.go` to support a `-token` flag, an environment variable `KIWI_TOKEN`, or fallback to loading a token stored in `~/.kiwi/credentials`. Inject the token header in all requests.
+    3.  **Docker Sandbox Executor**: Update `pkg/sandbox/exec.go` to support executing build/test commands inside an isolated Docker container:
+        `docker run --rm -v <sandbox_dir>:/workspace -w /workspace golang:1.21-alpine <cmd>`
+        This prevents untrusted sandbox execution on the host server.
+*   **Verification**: 
+    *   API requests without a valid token are rejected with `401 Unauthorized`.
+    *   Enabling Docker mode executes task steps inside isolated Docker containers, as verified by monitoring active docker containers.
+
+---
+
 ## Interactive Kanban Dashboard
 
 ![Kiwi Dashboard](assets/dashboard.png)

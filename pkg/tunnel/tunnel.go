@@ -191,7 +191,7 @@ func HandleTunnelResponse(w http.ResponseWriter, r *http.Request) {
 
 // ConnectAndListen connects to the remote server URL, listens for secret requests,
 // looks them up via the getSecret hook, and posts responses back to the server.
-func ConnectAndListen(ctx context.Context, serverURL, taskID string, getSecret func(string) string) error {
+func ConnectAndListen(ctx context.Context, serverURL, taskID, authToken string, getSecret func(string) string) error {
 	for {
 		select {
 		case <-ctx.Done():
@@ -204,6 +204,9 @@ func ConnectAndListen(ctx context.Context, serverURL, taskID string, getSecret f
 			req, err := http.NewRequestWithContext(ctx, "GET", connURL, nil)
 			if err != nil {
 				return err
+			}
+			if authToken != "" {
+				req.Header.Set("Authorization", "Bearer "+authToken)
 			}
 
 			resp, err := http.DefaultClient.Do(req)
@@ -235,6 +238,9 @@ func ConnectAndListen(ctx context.Context, serverURL, taskID string, getSecret f
 					return err
 				}
 				postReq.Header.Set("Content-Type", "text/plain")
+				if authToken != "" {
+					postReq.Header.Set("Authorization", "Bearer "+authToken)
+				}
 
 				postResp, err := http.DefaultClient.Do(postReq)
 				if err != nil {

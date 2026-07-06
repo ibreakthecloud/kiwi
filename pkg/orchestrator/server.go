@@ -51,11 +51,37 @@ func generateTaskID() string {
 	return hex.EncodeToString(b)
 }
 
+func (s *Server) validateAuth(w http.ResponseWriter, r *http.Request) bool {
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		http.Error(w, "Unauthorized: missing Authorization header", http.StatusUnauthorized)
+		return false
+	}
+	parts := strings.Split(authHeader, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		http.Error(w, "Unauthorized: invalid Authorization header format", http.StatusUnauthorized)
+		return false
+	}
+	token := parts[1]
+	expectedToken := os.Getenv("KIWI_SERVER_TOKEN")
+	if expectedToken == "" {
+		expectedToken = "kiwi-auth-token-1234" // Default developer fallback token
+	}
+	if token != expectedToken {
+		http.Error(w, "Unauthorized: invalid token", http.StatusUnauthorized)
+		return false
+	}
+	return true
+}
+
 func (s *Server) Start(addr string) error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/tasks", s.handleTasks)
 	mux.HandleFunc("/tasks/", s.handleTaskStatus)
 	mux.HandleFunc("/tunnel/", func(w http.ResponseWriter, r *http.Request) {
+		if !s.validateAuth(w, r) {
+			return
+		}
 		if strings.HasSuffix(r.URL.Path, "/response") {
 			tunnel.HandleTunnelResponse(w, r)
 		} else {
@@ -75,6 +101,9 @@ func (s *Server) Start(addr string) error {
 }
 
 func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
+	if !s.validateAuth(w, r) {
+		return
+	}
 	if r.Method == http.MethodGet {
 		var taskList []*TaskState
 		if err := s.db.Order("created_at desc").Find(&taskList).Error; err != nil {
@@ -219,6 +248,9 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleTaskStatus(w http.ResponseWriter, r *http.Request) {
+	if !s.validateAuth(w, r) {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return

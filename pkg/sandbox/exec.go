@@ -3,6 +3,7 @@ package sandbox
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -15,13 +16,30 @@ type Result struct {
 }
 
 // RunCommand runs a test or compiler command in a shell inside the target directory.
-// It accepts environment variables to inject, and fetches the current git diff.
+// If the environment variable USE_DOCKER=true is set, it isolates execution inside a Docker container.
 func RunCommand(ctx context.Context, dir string, cmdStr string, env []string) (*Result, error) {
-	// Execute the command in sh/bash to allow wildcards, pipes, etc.
-	cmd := exec.CommandContext(ctx, "sh", "-c", cmdStr)
-	cmd.Dir = dir
-	if len(env) > 0 {
-		cmd.Env = append(os.Environ(), env...)
+	var cmd *exec.Cmd
+
+	if os.Getenv("USE_DOCKER") == "true" {
+		// Run isolated command inside Docker container
+		args := []string{"run", "--rm", "-i"}
+		// Mount target directory to container workspace
+		args = append(args, "-v", fmt.Sprintf("%s:/workspace", dir), "-w", "/workspace")
+		// Inject environment variables (resolved secrets)
+		for _, eVal := range env {
+			args = append(args, "-e", eVal)
+		}
+		// Use official Golang alpine image and execute command
+		args = append(args, "golang:1.21-alpine", "sh", "-c", cmdStr)
+
+		cmd = exec.CommandContext(ctx, "docker", args...)
+	} else {
+		// Local command execution
+		cmd = exec.CommandContext(ctx, "sh", "-c", cmdStr)
+		cmd.Dir = dir
+		if len(env) > 0 {
+			cmd.Env = append(os.Environ(), env...)
+		}
 	}
 
 	var outBuf bytes.Buffer

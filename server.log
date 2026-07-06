@@ -1,0 +1,1652 @@
+====================================================
+  KIWID: Kiwi Cloud Daemon Server
+====================================================
+
+2026/07/06 14:39:17 [32m/Users/karn/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:32
+[0m[33m[0.209ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="task_states"
+
+2026/07/06 14:39:17 [32m/Users/karn/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:117
+[0m[33m[0.064ms] [34;1m[rows:1][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "task_states" AND sql IS NOT NULL order by type = "table" desc
+
+2026/07/06 14:39:17 [32m/Users/karn/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:125
+[0m[33m[0.025ms] [34;1m[rows:-][0m SELECT * FROM `task_states` LIMIT 1
+[Server] Kiwi daemon listening on :8080
+
+2026/07/06 14:39:22 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:180
+[0m[33m[0.634ms] [34;1m[rows:1][0m INSERT INTO `task_states` (`id`,`task`,`file_path`,`test_cmd`,`status`,`logs`,`created_at`,`sandbox_path`,`cost`) VALUES ("a701febc","Fix division by zero in Divide()","demo_project/math_utils.go","go test ./demo_project/...","RUNNING","","2026-07-06 14:39:22.771","/var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608",0.05)
+
+2026/07/06 14:39:22 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.216ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:22 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:195
+[0m[33m[1.077ms] [34;1m[rows:1][0m UPDATE `task_states` SET `cost`=cost + 0.02 WHERE id = "a701febc"
+
+2026/07/06 14:39:23 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[2.090ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:23 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.956ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:23 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.236ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:24 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.427ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:24 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.846ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:24 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.413ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:25 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.175ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:25 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.733ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:25 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.309ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:25 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:192
+[0m[33m[1.408ms] [34;1m[rows:1][0m UPDATE `task_states` SET `status`="RUNNING" WHERE id = "a701febc"
+
+2026/07/06 14:39:25 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:195
+[0m[33m[0.980ms] [34;1m[rows:1][0m UPDATE `task_states` SET `cost`=cost + 0.05 WHERE id = "a701febc"
+
+2026/07/06 14:39:26 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[2.824ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:26 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.788ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:26 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.349ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:27 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.460ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:27 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.911ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:27 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[1.167ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:28 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.444ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:28 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.842ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:28 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.342ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:28 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:192
+[0m[33m[0.563ms] [34;1m[rows:1][0m UPDATE `task_states` SET `status`="RUNNING" WHERE id = "a701febc"
+
+2026/07/06 14:39:29 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:195
+[0m[33m[0.866ms] [34;1m[rows:1][0m UPDATE `task_states` SET `cost`=cost + 0.05 WHERE id = "a701febc"
+
+2026/07/06 14:39:29 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:237
+[0m[33m[0.806ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+[Orchestrator Halt] Loop safety cut-off: recursive loop detected (compiler error repeated 3 times).
+
+[Execution Failure]: loop safety halt: recursive loop detected (compiler error repeated 3 times)
+",`status`="FAILED" WHERE id = "a701febc"
+
+2026/07/06 14:39:29 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:208
+[0m[33m[0.063ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-2427770608
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+
+=== Loop Iteration 2 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Fail: Target state still diverging.
+[Sandbox Output]:
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+
+[Orchestrator Halt] Loop safety cut-off: recursive loop detected (compiler error repeated 3 times).
+
+[Execution Failure]: loop safety halt: recursive loop detected (compiler error repeated 3 times)
+" WHERE id = "a701febc"
+
+2026/07/06 14:39:29 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.559ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "a701febc" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:52 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:180
+[0m[33m[2.082ms] [34;1m[rows:1][0m INSERT INTO `task_states` (`id`,`task`,`file_path`,`test_cmd`,`status`,`logs`,`created_at`,`sandbox_path`,`cost`) VALUES ("d91088af","Fix division by zero in Divide()","demo_project/math_utils.go","go test ./demo_project/...","RUNNING","","2026-07-06 14:39:52.991","/var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064",0.05)
+
+2026/07/06 14:39:52 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.366ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:53 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[1.113ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:53 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.393ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:53 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.205ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:54 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.531ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:54 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.815ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:54 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.352ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:55 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.447ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:55 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.237ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:55 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.209ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:56 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.793ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:56 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.879ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:56 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.328ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:57 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.644ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:57 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.231ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:57 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[1.659ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:58 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.365ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:58 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.582ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:58 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.380ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:39:59 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.411ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:59 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.686ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:39:59 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.274ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:00 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.770ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:00 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.883ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:00 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.454ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:01 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.651ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:01 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.300ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:01 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[1.547ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:02 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.410ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:02 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.193ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:02 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.152ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:03 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.358ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:03 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.256ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:03 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.105ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:04 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.356ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:04 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.379ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:04 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.192ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:05 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.321ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:05 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.451ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:05 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.202ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:06 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.315ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:06 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.210ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:06 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.131ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:07 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.275ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:07 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.189ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:07 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.110ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:08 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.388ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:08 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.393ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:08 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.202ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:09 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.456ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:09 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.307ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:09 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.179ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:10 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.281ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:10 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[3.618ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:10 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.188ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:11 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.299ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:11 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.209ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:11 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[1.518ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:12 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:195
+[0m[33m[1.359ms] [34;1m[rows:1][0m UPDATE `task_states` SET `cost`=cost + 0.02 WHERE id = "d91088af"
+
+2026/07/06 14:40:12 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[1.531ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:12 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.375ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:12 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.227ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:13 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.371ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:13 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.382ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:13 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.212ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:14 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.397ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:14 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.304ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:14 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.171ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:15 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:192
+[0m[33m[0.452ms] [34;1m[rows:1][0m UPDATE `task_states` SET `status`="RUNNING" WHERE id = "d91088af"
+
+2026/07/06 14:40:15 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[1.089ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:15 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.435ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:15 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.206ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:16 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.280ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:16 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.340ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:16 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.161ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:17 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.386ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:17 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.321ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:17 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.597ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:18 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.310ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:18 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:211
+[0m[33m[0.342ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:18 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[0.157ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:19 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:195
+[0m[33m[1.273ms] [34;1m[rows:1][0m UPDATE `task_states` SET `cost`=cost + 0.05 WHERE id = "d91088af"
+
+2026/07/06 14:40:19 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:237
+[0m[33m[0.777ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Success: Tests passed, compiler errors cleared.
+
+[Execution Success]: Task completed successfully.
+",`status`="SUCCESS" WHERE id = "d91088af"
+
+2026/07/06 14:40:19 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:208
+[0m[33m[0.100ms] [34;1m[rows:1][0m UPDATE `task_states` SET `logs`="[Orchestrator] Spawned cloud sandbox at: /var/folders/y_/kb7r59md1yb480xkhkvvp1xh0000gp/T/kiwi-server-sandbox-1157613064
+[Orchestrator] Desired State: Fix division by zero in Divide()
+[Orchestrator] Running initial test command: go test ./demo_project/...
+[Orchestrator] Tests failed. Entering correction loop...
+[Sandbox Output]:
+Unable to find image 'golang:1.21-alpine' locally
+1.21-alpine: Pulling from library/golang
+690e87867337: Pulling fs layer
+171883aaf475: Pulling fs layer
+2a6022646f09: Pulling fs layer
+e495e1face5c: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+e495e1face5c: Waiting
+4f4fb700ef54: Waiting
+171883aaf475: Verifying Checksum
+171883aaf475: Download complete
+690e87867337: Verifying Checksum
+690e87867337: Download complete
+e495e1face5c: Verifying Checksum
+e495e1face5c: Download complete
+690e87867337: Pull complete
+171883aaf475: Pull complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+2a6022646f09: Download complete
+2a6022646f09: Pull complete
+e495e1face5c: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+Status: Downloaded newer image for golang:1.21-alpine
+--- FAIL: TestDivide (0.00s)
+panic: runtime error: integer divide by zero [recovered]
+	panic: runtime error: integer divide by zero
+
+goroutine 6 [running]:
+testing.tRunner.func1.2({0x1247c0, 0x233790})
+	/usr/local/go/src/testing/testing.go:1545 +0x1c4
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x360
+panic({0x1247c0?, 0x233790?})
+	/usr/local/go/src/runtime/panic.go:914 +0x218
+github.com/ibreakthecloud/kiwi/demo_project.Divide(...)
+	/workspace/demo_project/math_utils.go:5
+github.com/ibreakthecloud/kiwi/demo_project.TestDivide(0x0?)
+	/workspace/demo_project/math_utils_test.go:16 +0x20
+testing.tRunner(0x4000003860, 0x14f2e8)
+	/usr/local/go/src/testing/testing.go:1595 +0xe8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x33c
+FAIL	github.com/ibreakthecloud/kiwi/demo_project	0.005s
+FAIL
+
+
+=== Loop Iteration 1 / 5 ===
+[Actor] Simulating edit proposal...
+[Actor] Applied proposed code edits to target file.
+[Sandbox] Re-running build/tests...
+[Orchestrator] Fetching credential 'GITHUB_TOKEN' over reverse tunnel...
+[Critic] Success: Tests passed, compiler errors cleared.
+
+[Execution Success]: Task completed successfully.
+" WHERE id = "d91088af"
+
+2026/07/06 14:40:19 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[2.038ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1
+
+2026/07/06 14:40:20 [32m/Users/karn/Desktop/workspace/steelwing/pkg/orchestrator/server.go:262
+[0m[33m[1.120ms] [34;1m[rows:1][0m SELECT * FROM `task_states` WHERE id = "d91088af" ORDER BY `task_states`.`id` LIMIT 1

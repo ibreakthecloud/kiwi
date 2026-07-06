@@ -41,7 +41,7 @@ func TestTunnelRoundtrip(t *testing.T) {
 
 	errChan := make(chan error, 1)
 	go func() {
-		errChan <- ConnectAndListen(ctx, server.URL, taskID, getSecretHook)
+		errChan <- ConnectAndListen(ctx, server.URL, taskID, "", getSecretHook)
 	}()
 
 	// Wait for the client to connect and mark tunnel as Connected
