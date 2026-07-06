@@ -2,7 +2,7 @@
 
 Kiwi is an enterprise-ready secure execution engine that runs autonomous developer loops (TDD Actor-Critic alignment) in the cloud while pulling required secrets dynamically and securely from the local machine over a reverse tunnel.
 
-With Kiwi, you can trigger complex, long-running agent workflows in the cloud sandbox and **safely close your laptop**. If a step requires a developer credential (like a GitHub OAuth token, database credentials, or API keys), the execution statefully pauses, wait for you to reconnect, and resumes once the tunnel is active.
+With Kiwi, you can trigger complex, long-running agent workflows in the cloud sandbox and **safely close your laptop**. Once a credential (like a GitHub OAuth token or database keys) is resolved, it is cached securely in-memory on the cloud daemon, allowing the loop to continue executing to completion even if your laptop is closed and the tunnel drops.
 
 ---
 
@@ -12,30 +12,31 @@ With Kiwi, you can trigger complex, long-running agent workflows in the cloud sa
 sequenceDiagram
     participant CLI as Local CLI Client
     participant Server as Kiwi Cloud Daemon
-    participant Sandbox as Cloud Sandbox (Temp Dir)
+    participant Sandbox as Cloud Sandbox (Docker Container)
 
     CLI->>Server: 1. Pack & Sync Codebase (ZIP upload)
-    Server->>Sandbox: 2. Extract Workspace
+    Server->>Sandbox: 2. Extract Workspace & Start Container
     Server->>Server: 3. Spawn Actor-Critic Loop
     CLI->>Server: 4. Open Reverse Tunnel stream (GET /tunnel/{id})
     
-    loop Loop Execution
-        Sandbox->>Server: Resolve Env Key (e.g. GITHUB_TOKEN)
-        Server->>CLI: Request Secret Key over Tunnel
-        Note over CLI: Fetch key from env / secrets.json
-        CLI-->>Server: POST Secret Value (POST /tunnel/{id}/response)
-        Server-->>Sandbox: Inject Credentials
-        Sandbox->>Sandbox: Execute Test / Build commands
-    end
+    Note over Server, CLI: Initial Handshake
+    Server->>CLI: Request Secret Key (e.g. GITHUB_TOKEN)
+    CLI-->>Server: POST Secret Value
+    Server->>Server: Store Secret in Memory Cache
 
     Note over CLI: Laptop Closed! (Tunnel Breaks)
-    Server->>Server: Detect Disconnect & set Task State to "PAUSED"
-    Server->>Server: Block loop execution thread
+    
+    loop Loop Execution (Headless)
+        Server->>Server: Retrieve GITHUB_TOKEN from Cache
+        Server->>Sandbox: Inject Cached Credentials
+        Sandbox->>Sandbox: Execute Isolated Test / Build inside Container
+    end
 
-    Note over CLI: Laptop Opened! (Reconnected)
+    Note over Server: If a NEW un-cached secret is requested:
+    Server->>Server: Detect Disconnect, set State to "PAUSED" & Block thread
+    Note over CLI: Laptop Reopened! (Resume task)
     CLI->>Server: Resume Task (kiwi -resume -task-id {id})
-    Server->>Server: Set Task State back to "RUNNING"
-    Server->>Server: Unblock thread & continue execution
+    Server->>Server: Set Task State back to "RUNNING" & Unblock
 ```
 
 ---
@@ -43,36 +44,14 @@ sequenceDiagram
 ## Core Features
 
 1.  **Actor-Critic Alignment Loop**: A test-driven development (TDD) controller that iteratively edits code, evaluates compiler/test stdout in the sandbox, and refines fixes.
-2.  **Reverse Credential Tunneling**: Eliminates the need to persist long-lived AWS, GitHub, or GCP API credentials on cloud sandbox hosts.
-3.  **Headless Laptop Pause & Resume**: Complete offline resilience. Execution freezes statefully when a laptop disconnects and resumes when it reconnects.
-4.  **Loop Safety & Budgeting**: Built-in protection gates:
-    *   **Circuit Breaker**: Detects infinite recursive loop states by tracking duplicate compiler stdout patterns.
-    *   **Budget Caps**: Sets strict cost controls per task (runs at simulated token pricing) to prevent budget drainage.
-5.  **Interactive Kanban Dashboard**: Embedded dark-themed dashboard featuring status cards, live polling, log filters, and a real-time console log viewer.
-
----
-
-### Phase 4: Central Dashboard, Budgets, & Loop Safety
-*   **Goal**: Build the operational control plane for team administrators.
-*   **Key Tasks**:
-		1.  Implement the Kanban Board API (`pkg/dashboard`) serving state (Backlog, In Progress, Paused, Done).
-		2.  Build semantic loop detection: Hash outgoing LLM trajectories and trigger a circuit breaker if the agent makes identical failing edits.
-		3.  Implement unified billing and team cost quotas (e.g. stopping loops once the user's allocated daily dollar pool is hit).
-*   **Verification**: An admin can log into the dashboard, view active/paused loops, inspect cost logs, and set spending limits.
-
----
-
-### Phase 5: Authentication & Docker Sandboxing (Production Hardening)
-*   **Goal**: Restrict API access via Token Authorization and isolate execution sandboxes inside Docker containers.
-*   **Key Tasks**:
-    1.  **Authorization Middleware**: Implement JWT/bearer token authentication middleware in `pkg/orchestrator/server.go`. Require `Authorization: Bearer <token>` for all endpoints (except serving the dashboard html).
-    2.  **CLI Credentials Integration**: Update `cmd/kiwi/main.go` to support a `-token` flag, an environment variable `KIWI_TOKEN`, or fallback to loading a token stored in `~/.kiwi/credentials`. Inject the token header in all requests.
-    3.  **Docker Sandbox Executor**: Update `pkg/sandbox/exec.go` to support executing build/test commands inside an isolated Docker container:
-        `docker run --rm -v <sandbox_dir>:/workspace -w /workspace golang:1.21-alpine <cmd>`
-        This prevents untrusted sandbox execution on the host server.
-*   **Verification**: 
-    *   API requests without a valid token are rejected with `401 Unauthorized`.
-    *   Enabling Docker mode executes task steps inside isolated Docker containers, as verified by monitoring active docker containers.
+2.  **Docker Container Sandboxing**: Isolates all untrusted code modification, compilation, and test execution inside dedicated Docker containers (`golang:1.21-alpine`), securing the server host.
+3.  **Reverse Credential Tunneling**: Eliminates the need to persist long-lived AWS, GitHub, or GCP API credentials on cloud sandbox hosts.
+4.  **Credentials Caching**: Allows developers to close their laptops immediately after the loop starts. The cloud sandbox uses cached credentials to execute the remaining iterations.
+5.  **Headless Laptop Pause & Resume**: Complete offline resilience. If an un-cached secret is needed while the laptop is closed, execution statefully pauses and resumes when the laptop is opened.
+6.  **Loop Safety & Budgeting**:
+    *   **Circuit Breaker**: Detects infinite recursive loop states by tracking duplicate compiler stdout patterns (stops after 3 identical failures).
+    *   **Budget Caps**: Sets strict cost controls per task to prevent budget drainage.
+7.  **Interactive Kanban Dashboard**: Embedded dark-themed dashboard featuring status cards, live polling, log filters, and a real-time console log viewer.
 
 ---
 
@@ -86,7 +65,8 @@ sequenceDiagram
 
 ### Prerequisites
 *   Go 1.21 or higher
-*   macOS ( Tahoe/darwin ARM64 ) or Linux
+*   macOS or Linux
+*   Docker Desktop (for container sandboxing)
 
 ### Quick Setup
 
@@ -98,7 +78,10 @@ sequenceDiagram
     ```
 
 2.  **Start the Kiwi Server Daemon**:
+    Configure the auth token and enable Docker sandboxing:
     ```bash
+    export USE_DOCKER="true"
+    export KIWI_SERVER_TOKEN="production-secure-token-9999"
     ./kiwid -addr :8080 -db kiwi.db
     ```
 
@@ -109,7 +92,7 @@ sequenceDiagram
     echo '{"GITHUB_TOKEN": "real-token-value-here"}' > secrets.json
 
     # Run loop
-    ./kiwi -task "Fix division by zero in Divide()" -file demo_project/math_utils.go -test-cmd "go test ./demo_project/..."
+    ./kiwi -token "production-secure-token-9999" -task "Fix division by zero in Divide()" -file demo_project/math_utils.go -test-cmd "go test ./demo_project/..."
     ```
 
 4.  **Access the Dashboard**:

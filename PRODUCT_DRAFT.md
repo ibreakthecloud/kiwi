@@ -59,12 +59,14 @@ These are the critical design issues we must resolve to establish Product-Market
 
 ### Q1: Local Dependencies in the Cloud
 *   *Problem:* How do we compile and test code in the cloud sandbox when projects rely on complex local dependencies (e.g., local Postgres databases, proprietary internal services, or macOS-specific toolchains)?
-*   *Discussion points:* Do we attempt to auto-containerize the environment, or run execution shims?
+*   *Resolved:* We implemented containerized Docker execution in `pkg/sandbox/exec.go` mounting the task directory inside a standard `golang:1.21-alpine` container. For enterprise production, base images are customized with required project toolchains.
 
 ### Q2: Stuck Loops vs. Slow Progress
 *   *Problem:* How do we distinguish between an agent stuck in a repetitive loop (e.g., fixing a compile error with the same failed approach) and an agent making slow, incremental progress on a difficult refactoring task?
-*   *Discussion points:* What thresholds, semantic hashes, or heuristics do we use to prevent false positive halts?
+*   *Resolved:* We implemented a semantic duplicate-error circuit breaker in `pkg/orchestrator/engine.go` that hashes stdout compiler errors and halts execution if the exact same error is encountered 3 times.
 
 ### Q3: Reverse Tunnel Security Concerns
 *   *Problem:* Will enterprise network security teams block local reverse tunnels, and how do we provide a clean, non-intrusive alternative for sharing local credentials?
+*   *Resolved:* We implemented memory-based credential caching inside `pkg/tunnel/tunnel.go`. The reverse tunnel is only accessed briefly during startup to resolve and cache environment keys. Once cached, the tunnel connection is dropped and the local dependency ends, permitting the laptop to close without stopping loop execution.
+
 
