@@ -15,6 +15,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/ibreakthecloud/kiwi/pkg/dashboard"
 	"github.com/ibreakthecloud/kiwi/pkg/provider"
 	"github.com/ibreakthecloud/kiwi/pkg/sandbox"
 	"github.com/ibreakthecloud/kiwi/pkg/tunnel"
@@ -30,6 +31,7 @@ type TaskState struct {
 	Logs        string    `json:"logs"`
 	CreatedAt   time.Time `json:"created_at"`
 	SandboxPath string    `json:"-"`
+	Cost        float64   `json:"cost"`
 }
 
 type Server struct {
@@ -61,12 +63,32 @@ func (s *Server) Start(addr string) error {
 			tunnel.HandleTunnelConn(w, r)
 		}
 	})
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" || r.URL.Path == "/dashboard" {
+			dashboard.HandleDashboard(w, r)
+		} else {
+			http.NotFound(w, r)
+		}
+	})
 
 	fmt.Printf("[Server] Kiwi daemon listening on %s\n", addr)
 	return http.ListenAndServe(addr, mux)
 }
 
 func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		s.tasksMutex.RLock()
+		taskList := make([]*TaskState, 0, len(s.tasks))
+		for _, task := range s.tasks {
+			taskList = append(taskList, task)
+		}
+		s.tasksMutex.RUnlock()
+
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(taskList)
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -125,6 +147,7 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 		Status:      "RUNNING",
 		CreatedAt:   time.Now(),
 		SandboxPath: tempSandbox,
+		Cost:        0.05,
 	}
 
 	s.tasksMutex.Lock()
@@ -140,6 +163,11 @@ func (s *Server) handleTasks(w http.ResponseWriter, r *http.Request) {
 		engine.StateCallback = func(newStatus string) {
 			s.tasksMutex.Lock()
 			state.Status = newStatus
+			s.tasksMutex.Unlock()
+		}
+		engine.CostCallback = func(amount float64) {
+			s.tasksMutex.Lock()
+			state.Cost += amount
 			s.tasksMutex.Unlock()
 		}
 
