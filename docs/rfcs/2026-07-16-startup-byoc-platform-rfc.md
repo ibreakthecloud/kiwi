@@ -26,11 +26,11 @@ graph TD
         API[API Gateway & Auth]
         DB[(SaaS Database<br>Zero-Knowledge)]
         Q[(Event Queue)]
-        Planner[Orchestrator<br>Planner Agent]
     end
 
     subgraph BYOC[Customer VPC - Data Plane]
         KD[KiwiDaemon<br>VM / Kubernetes]
+        Planner[Orchestrator<br>Planner Agent]
         Cache[(LFU Git Worktree Cache)]
         SB1[Docker Sandbox 1<br>Execution Agent]
         SB2[Docker Sandbox N<br>Execution Agent]
@@ -44,14 +44,11 @@ graph TD
 
     %% SaaS Internal
     UI --> API
-    API --> Planner
     API --> DB
-    Planner --> Q
-    
-    %% SaaS to External
-    Planner <-->|Plan generation| LLM_P
+    API --> Q
     
     %% Data Plane Internal
+    KD --> Planner
     KD --> Cache
     KD --> SB1
     KD --> SB2
@@ -60,6 +57,7 @@ graph TD
     KD <-->|HTTPS Polling / Heartbeat| API
     
     %% Data Plane to External
+    Planner <-->|Plan generation| LLM_P
     SB1 <-->|Execute code| LLM_W
     SB2 <-->|Execute code| LLM_W
     Cache <-->|git fetch| VCS
@@ -67,11 +65,12 @@ graph TD
 ```
 
 ### 3.2 Execution Flow
+
+```mermaid
 sequenceDiagram
     participant U as User (SDK/CLI/UI)
     box rgba(61, 91, 255, 0.1) Control Plane (Kiwi SaaS)
     participant API as API Gateway & Auth
-    participant CP as Orchestrator (Go)
     participant Q as Event Queue
     end
     box rgba(200, 200, 200, 0.1) Data Plane (Customer BYOC)
@@ -85,24 +84,24 @@ sequenceDiagram
     U->>KD: Run `terraform apply` in AWS/GCP
     KD->>API: Boot & Self-Register (Sends PubKey)
     
-    Note over U, Q: 2. Task Planning (The Swarm)
-    U->>API: `kiwi submit "Fix issue #50"` (via CLI or Linear Webhook)
-    API->>CP: Route Task
-    CP->>LLM: Planner Agent (Fable) generates `worker-spec.json`
-    LLM-->>CP: Returns chunked DAG of tasks, AGENT.md, deps
-    CP->>Q: Enqueue `worker-spec.json` 
+    Note over U, Q: 2. Task Submission
+    U->>API: `kiwi submit "Fix issue #50"`
+    API->>Q: Enqueue Raw Task Request
     
-    Note over KD, SB: 3. Execution (Zero-Knowledge)
+    Note over KD, SB: 3. Planning & Execution (Zero-Knowledge)
     KD->>API: HTTPS Heartbeat (Polling)
     API->>Q: Pop task
-    API-->>KD: Send `worker-spec.json` (Includes Encrypted Keys)
+    API-->>KD: Send Raw Task (Includes Encrypted Keys)
     KD->>KD: Decrypt Keys in memory using Private Key
+    
+    KD->>LLM: Planner Agent (Fable) analyzes task
+    LLM-->>KD: Returns `worker-spec.json` (DAG of tasks, deps)
+    
     KD->>KD: `git fetch` & `git worktree add /tmp/task-123`
     KD->>SB: Mount worktree into Docker Sandbox
     SB->>LLM: Execution Loop (Sonnet) writes code & tests
     SB-->>KD: Tests Pass -> PR Created
     KD->>KD: Unmount & `git worktree remove`
-    KD->>API: Report Success
 ```
 
 ## 4. Technical Deep Dives
