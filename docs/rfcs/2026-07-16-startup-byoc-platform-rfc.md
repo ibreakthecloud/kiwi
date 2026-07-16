@@ -17,7 +17,56 @@ By pivoting to a BYOC model, we achieve two major goals:
 
 The architecture splits into a central SaaS (Control Plane) and a localized agent runner (Data Plane).
 
+### 3.1 High-Level Structure
+
 ```mermaid
+graph TD
+    subgraph SaaS[Kiwi SaaS - Control Plane]
+        UI[SDK / CLI / Webhooks]
+        API[API Gateway & Auth]
+        DB[(SaaS Database<br>Zero-Knowledge)]
+        Q[(Event Queue)]
+        Planner[Orchestrator<br>Planner Agent]
+    end
+
+    subgraph BYOC[Customer VPC - Data Plane]
+        KD[KiwiDaemon<br>VM / Kubernetes]
+        Cache[(LFU Git Worktree Cache)]
+        SB1[Docker Sandbox 1<br>Execution Agent]
+        SB2[Docker Sandbox N<br>Execution Agent]
+    end
+
+    subgraph External[External Services]
+        LLM_P[Frontier LLM<br>e.g., Fable]
+        LLM_W[Worker LLM<br>e.g., Sonnet]
+        VCS[GitHub / GitLab]
+    end
+
+    %% SaaS Internal
+    UI --> API
+    API --> Planner
+    API --> DB
+    Planner --> Q
+    
+    %% SaaS to External
+    Planner <-->|Plan generation| LLM_P
+    
+    %% Data Plane Internal
+    KD --> Cache
+    KD --> SB1
+    KD --> SB2
+    
+    %% Data Plane to SaaS
+    KD <-->|HTTPS Polling / Heartbeat| API
+    
+    %% Data Plane to External
+    SB1 <-->|Execute code| LLM_W
+    SB2 <-->|Execute code| LLM_W
+    Cache <-->|git fetch| VCS
+    SB1 -->|Push PR| VCS
+```
+
+### 3.2 Execution Flow
 sequenceDiagram
     participant U as User (SDK/CLI/UI)
     box rgba(61, 91, 255, 0.1) Control Plane (Kiwi SaaS)
