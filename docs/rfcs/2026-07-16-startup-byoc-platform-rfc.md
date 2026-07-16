@@ -31,7 +31,7 @@ graph TD
 
     subgraph BYOC[Customer VPC - Data Plane]
         KD[KiwiDaemon<br>VM / Kubernetes]
-        Cache[(LFU Git Worktree Cache)]
+        Cache[(Git Worktree Cache)]
         SB1[Docker Sandbox 1<br>Execution Agent]
         SB2[Docker Sandbox N<br>Execution Agent]
     end
@@ -112,13 +112,17 @@ sequenceDiagram
 
 ### 4.1 Secure Credential Management (Asymmetric Encryption)
 To securely transmit credentials (LLM keys, Git tokens) to the customer's VPC without exposing them in transit:
-* `KiwiDaemon` boots on a VM and generates an Ed25519 keypair, registering its Public Key with the CP.
+* `KiwiDaemon` boots on a VM and generates **two** keypairs, registering both public keys with the CP:
+  * an **X25519** keypair used to *receive* credentials sealed to the daemon (X25519/ECDH is encryption-capable), and
+  * an **Ed25519** keypair that is the daemon's signing identity, used to authenticate every heartbeat (Ed25519 signs but cannot encrypt, hence the separate key).
 * The SaaS Control Plane holds **its own** Global API keys securely to communicate with the Frontier Model for planning.
-* **Customer-provided credentials** (e.g., Worker LLM keys, Git tokens) are stored in the SaaS database only in zero-knowledge encrypted form using the `KiwiDaemon`'s Public Key. The SaaS never has plaintext access to them.
+* **Customer-provided credentials** (e.g., Worker LLM keys, Git tokens) are stored in the SaaS database only in encrypted form, sealed to the `KiwiDaemon`'s X25519 Public Key. The SaaS never has plaintext access to them (zero-knowledge for customer credentials).
 * KD pulls the payload via HTTPS polling (Pull Model) and decrypts the customer credentials in-memory during execution.
 
-### 4.2 LFU Repository Caching (`git worktree`)
+### 4.2 Git Worktree Caching (`git worktree`)
 To avoid expensive network clones for parallel agents:
+> Note: a bounded, least-frequently-used (LFU) eviction policy over cached bare
+> repositories is planned as a follow-up; the current cache is unbounded.
 * KD maintains a base `bare` clone of the repository.
 * When a task arrives, KD runs `git worktree add /tmp/task-123 main` (milliseconds latency, zero extra disk space).
 * The Docker Sandbox mounts `-v /tmp/task-123:/workspace`.
@@ -128,7 +132,7 @@ To avoid expensive network clones for parallel agents:
 
 ### Phase 1: Data Plane Foundation (`kiwidaemon`)
 * Scaffold `cmd/kiwidaemon` in Go.
-* Implement Ed25519 cryptography and registration handshake.
+* Implement X25519 (credential sealing) + Ed25519 (heartbeat signing) cryptography and the registration handshake.
 * Implement HTTPS heartbeat polling for `worker-spec.json`.
 * Implement `git worktree` isolation and Docker sandbox mounting.
 
