@@ -134,7 +134,7 @@ To avoid expensive network clones for parallel agents:
 
 ### Phase 2: Control Plane Adaptations
 * Implement the Event Queue for pending tasks.
-* Update `kiwi-api` DB schema for zero-knowledge ciphertext storage.
+* Update `kiwi-api` DB schema for secure credential storage.
 * Expose endpoints for Fable planner triggers.
 
 ### Phase 3: Integration Layer (CLI & SDK)
