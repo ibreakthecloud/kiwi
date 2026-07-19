@@ -70,6 +70,10 @@ func TestHealthEndpoints(t *testing.T) {
 
 		mux := http.NewServeMux()
 		mux.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+			if r.Method != http.MethodGet {
+				http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+				return
+			}
 			sqlDB, err := srv.db.DB()
 			if err != nil {
 				http.Error(w, "Database unavailable", http.StatusServiceUnavailable)
@@ -89,6 +93,25 @@ func TestHealthEndpoints(t *testing.T) {
 
 		if w.Code != http.StatusServiceUnavailable {
 			t.Errorf("expected status %d; got %d", http.StatusServiceUnavailable, w.Code)
+		}
+	})
+
+	t.Run("healthz blocks POST", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodPost, "/healthz", nil)
+		w := httptest.NewRecorder()
+
+		mux := http.NewServeMux()
+		mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+			if r.Method != http.MethodGet {
+				http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+		mux.ServeHTTP(w, req)
+
+		if w.Code != http.StatusMethodNotAllowed {
+			t.Errorf("expected status %d; got %d", http.StatusMethodNotAllowed, w.Code)
 		}
 	})
 }

@@ -446,6 +446,10 @@ func (s *Server) Start(addr string) error {
 	root.HandleFunc("/api/v1/daemon/result", s.handleDaemonResult)
 
 	root.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte("OK"))
 	})
@@ -453,6 +457,10 @@ func (s *Server) Start(addr string) error {
 	auth.OAuthRouter(s.db, root)
 
 	root.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
 		sqlDB, err := s.db.DB()
 		if err != nil {
 			http.Error(w, "Database unavailable", http.StatusServiceUnavailable)
